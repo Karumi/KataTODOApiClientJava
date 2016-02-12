@@ -15,9 +15,16 @@
 
 package com.karumi.todoapiclient;
 
+import com.karumi.todoapiclient.dto.TaskDto;
+import com.karumi.todoapiclient.exception.ItemNotFoundException;
+import com.karumi.todoapiclient.exception.NetworkErrorException;
+import com.karumi.todoapiclient.exception.TodoApiClientException;
+import com.karumi.todoapiclient.exception.UnknownErrorException;
 import com.karumi.todoapiclient.interceptor.DefaultHeadersInterceptor;
 import java.io.IOException;
+import java.util.List;
 import okhttp3.OkHttpClient;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import static com.karumi.todoapiclient.TodoApiClientConfig.BASE_ENDPOINT;
@@ -33,11 +40,22 @@ public class TodoApiClient {
     this.todoService = retrofit.create(TodoService.class);
   }
 
-  public void getAllTasks() {
+  public List<TaskDto> getAllTasks() throws TodoApiClientException{
     try {
-      todoService.getAll().execute();
+      Response<List<TaskDto>> response = todoService.getAll().execute();
+      inspectResponseForErrors(response);
+      return response.body();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new NetworkErrorException();
+    }
+  }
+
+  private void inspectResponseForErrors(Response response) throws TodoApiClientException {
+    int code = response.code();
+    if (code == 404) {
+      throw new ItemNotFoundException();
+    }else {
+      throw new UnknownErrorException(code);
     }
   }
 }
