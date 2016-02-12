@@ -25,7 +25,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.mockito.MockitoAnnotations;
 
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.core.StringContains.containsString;
@@ -37,7 +36,6 @@ public class MockWebServerTest {
   private MockWebServer server;
 
   @Before public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
     this.server = new MockWebServer();
     this.server.start();
   }

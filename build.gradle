@@ -17,7 +17,6 @@ dependencies {
   compile 'com.google.code.gson:gson:2.5'
   compile 'com.squareup.okio:okio:1.0.0'
   testCompile 'junit:junit:4.11'
-  testCompile 'org.mockito:mockito-all:1.9.5'
   testCompile 'com.squareup.okhttp:mockwebserver:2.5.0'
   testCompile 'commons-io:commons-io:2.4'
 }
