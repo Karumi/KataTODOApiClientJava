@@ -60,11 +60,30 @@ public class TodoApiClient {
     }
   }
 
+  public TaskDto addTask(TaskDto task) throws TodoApiClientException {
+    try {
+      Response<TaskDto> response = todoService.add(task).execute();
+      inspectResponseForErrors(response);
+      return response.body();
+    } catch (IOException e) {
+      throw new NetworkErrorException();
+    }
+  }
+
   public TaskDto updateTaskById(TaskDto task) throws TodoApiClientException {
     try {
       Response<TaskDto> response = todoService.updateById(task.getId(), task).execute();
       inspectResponseForErrors(response);
       return response.body();
+    } catch (IOException e) {
+      throw new NetworkErrorException();
+    }
+  }
+
+  public void deleteTaskById(String taskId) throws TodoApiClientException {
+    try {
+      Response response = todoService.deleteById(taskId).execute();
+      inspectResponseForErrors(response);
     } catch (IOException e) {
       throw new NetworkErrorException();
     }
