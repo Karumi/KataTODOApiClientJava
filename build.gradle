@@ -7,26 +7,23 @@ apply plugin: 'checkstyle'
 sourceCompatibility = 1.7
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.mockito:mockito-all:1.9.5'
-    testCompile 'com.squareup.okhttp:mockwebserver:2.5.0'
-    testCompile 'commons-io:commons-io:2.4'
-
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-    compile 'com.squareup.okhttp:logging-interceptor:2.6.0'
+  compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+  compile 'com.google.code.gson:gson:2.5'
+  testCompile 'junit:junit:4.11'
+  testCompile 'org.mockito:mockito-all:1.9.5'
+  testCompile 'com.squareup.okhttp:mockwebserver:2.5.0'
+  testCompile 'commons-io:commons-io:2.4'
 }
 
 task checkstyle(type: Checkstyle) {
-    configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
+  configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+  source 'src'
+  include '**/*.java'
+  exclude '**/gen/**'
 
-    classpath = files()
+  classpath = files()
 }
