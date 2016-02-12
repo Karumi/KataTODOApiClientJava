@@ -141,6 +141,28 @@ public class TodoApiClientTest extends MockWebServerTest {
     apiClient.addTask(ANY_TASK);
   }
 
+  @Test public void sendsTheRequestToTheCorrectPathDeletingATask() throws Exception {
+    enqueueMockResponse();
+
+    apiClient.deleteTaskById(ANY_TASK_ID);
+
+    assertRequestSentTo("/todos/1");
+  }
+
+  @Test(expected = ItemNotFoundException.class)
+  public void returnsItemNotFoundIfThereIsNoTaskWithIdTheAssociateId() throws Exception {
+    enqueueMockResponse(404);
+
+    apiClient.deleteTaskById(ANY_TASK_ID);
+  }
+
+  @Test(expected = UnknownErrorException.class)
+  public void returnsUnknownErrorIfThereIsAnyErrorDeletingTask() throws Exception {
+    enqueueMockResponse(418);
+
+    apiClient.deleteTaskById(ANY_TASK_ID);
+  }
+
   private void assertTaskContainsExpectedValues(TaskDto task) {
     assertEquals(task.getId(), "1");
     assertEquals(task.getUserId(), "1");
