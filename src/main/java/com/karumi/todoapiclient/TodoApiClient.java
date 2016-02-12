@@ -15,5 +15,18 @@
 
 package com.karumi.todoapiclient;
 
+import retrofit2.Retrofit;
+
+import static com.karumi.todoapiclient.TodoApiClientConfig.*;
+
 public class TodoApiClient {
+
+  private final TodoService todoService;
+
+  public TodoApiClient() {
+    Retrofit retrofit = new Retrofit.Builder()
+        .baseUrl(BASE_ENDPOINT)
+        .build();
+    this.todoService = retrofit.create(TodoService.class);
+  }
 }

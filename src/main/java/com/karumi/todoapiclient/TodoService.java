@@ -25,12 +25,14 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+import static com.karumi.todoapiclient.TodoApiClientConfig.*;
+
 interface TodoService {
 
-  @GET("todos") Call<List<TaskDto>> getAll();
-  @GET("todos/{taskId}") Call<TaskDto> getById(@Path("taskId") String taskId);
-  @POST("todos") Call<TaskDto> addTask(@Body TaskDto task);
-  @PUT("todos/{taskId}") Call<TaskDto> getById(@Path("taskId") String taskId, @Body TaskDto task);
-  @DELETE("todos/{taskId}") Call<List<TaskDto>> deleteById(@Path("taskId") String taskId);
+  @GET(TASKS_ENDPOINT) Call<List<TaskDto>> getAll();
+  @GET(TASKS_ENDPOINT + "/{taskId}") Call<TaskDto> getById(@Path("taskId") String taskId);
+  @POST(TASKS_ENDPOINT) Call<TaskDto> addTask(@Body TaskDto task);
+  @PUT(TASKS_ENDPOINT +"/{taskId}") Call<TaskDto> getById(@Path("taskId") String taskId, @Body TaskDto task);
+  @DELETE(TASKS_ENDPOINT + "/{taskId}") Call<List<TaskDto>> deleteById(@Path("taskId") String taskId);
 
 }
