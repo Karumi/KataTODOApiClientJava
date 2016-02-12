@@ -15,6 +15,6 @@
 
 package com.karumi.todoapiclient.exception;
 
-public class TodoApiClientException extends Exception{
+public class TodoApiClientException extends Exception {
 
 }

@@ -34,8 +34,7 @@ public class TodoApiClient {
   private final TodoService todoService;
 
   public TodoApiClient() {
-    Retrofit retrofit = new Retrofit.Builder()
-        .baseUrl(BASE_ENDPOINT)
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_ENDPOINT)
         .addConverterFactory(GsonConverterFactory.create())
         .build();
     retrofit.client().interceptors().add(new DefaultHeadersInterceptor());
@@ -95,7 +94,7 @@ public class TodoApiClient {
     int code = response.code();
     if (code == 404) {
       throw new ItemNotFoundException();
-    } else if (code  >= 400){
+    } else if (code >= 400) {
       throw new UnknownErrorException(code);
     }
   }

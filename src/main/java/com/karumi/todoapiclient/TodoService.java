@@ -18,8 +18,6 @@ package com.karumi.todoapiclient;
 import com.karumi.todoapiclient.dto.TaskDto;
 import java.util.List;
 import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
