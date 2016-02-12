@@ -15,13 +15,14 @@
 
 package com.karumi.todoapiclient.dto;
 
+import com.google.gson.annotations.SerializedName;
 
 public class TaskDto {
 
-  private final String id;
-  private final String userId;
-  private final String title;
-  private final boolean finished;
+  @SerializedName("id") private final String id;
+  @SerializedName("userId") private final String userId;
+  @SerializedName("title") private final String title;
+  @SerializedName("finished") private final boolean finished;
 
   public TaskDto(String id, String userId, String title, boolean finished) {
     this.id = id;
