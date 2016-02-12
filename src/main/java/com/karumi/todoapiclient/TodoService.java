@@ -33,9 +33,9 @@ interface TodoService {
 
   @GET(TASKS_ENDPOINT + "/{taskId}") Call<TaskDto> getById(@Path("taskId") String taskId);
 
-  @POST(TASKS_ENDPOINT) Call<TaskDto> addTask(@Body TaskDto task);
+  @POST(TASKS_ENDPOINT) Call<TaskDto> add(@Body TaskDto task);
 
-  @PUT(TASKS_ENDPOINT + "/{taskId}") Call<TaskDto> getById(@Path("taskId") String taskId,
+  @PUT(TASKS_ENDPOINT + "/{taskId}") Call<TaskDto> updateById(@Path("taskId") String taskId,
       @Body TaskDto task);
 
   @DELETE(TASKS_ENDPOINT + "/{taskId}") Call<List<TaskDto>> deleteById(

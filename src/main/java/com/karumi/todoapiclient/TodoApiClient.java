@@ -50,6 +50,26 @@ public class TodoApiClient {
     }
   }
 
+  public TaskDto getTaskById(String taskId) throws TodoApiClientException {
+    try {
+      Response<TaskDto> response = todoService.getById(taskId).execute();
+      inspectResponseForErrors(response);
+      return response.body();
+    } catch (IOException e) {
+      throw new NetworkErrorException();
+    }
+  }
+
+  public TaskDto updateTaskById(TaskDto task) throws TodoApiClientException {
+    try {
+      Response<TaskDto> response = todoService.updateById(task.getId(), task).execute();
+      inspectResponseForErrors(response);
+      return response.body();
+    } catch (IOException e) {
+      throw new NetworkErrorException();
+    }
+  }
+
   private void inspectResponseForErrors(Response response) throws TodoApiClientException {
     int code = response.code();
     if (code == 404) {
