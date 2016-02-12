@@ -65,6 +65,30 @@ public class MockWebServerTest {
     assertEquals(url, request.getPath());
   }
 
+  protected void assertGetRequestSentTo(String url) throws InterruptedException {
+    RecordedRequest request = server.takeRequest();
+    assertEquals(url, request.getPath());
+    assertEquals("GET", request.getMethod());
+  }
+
+  protected void assertPostRequestSentTo(String url) throws InterruptedException {
+    RecordedRequest request = server.takeRequest();
+    assertEquals(url, request.getPath());
+    assertEquals("POST", request.getMethod());
+  }
+
+  protected void assertPutRequestSentTo(String url) throws InterruptedException {
+    RecordedRequest request = server.takeRequest();
+    assertEquals(url, request.getPath());
+    assertEquals("PUT", request.getMethod());
+  }
+
+  protected void assertDeleteRequestSentTo(String url) throws InterruptedException {
+    RecordedRequest request = server.takeRequest();
+    assertEquals(url, request.getPath());
+    assertEquals("DELETE", request.getMethod());
+  }
+
   protected void assertRequestSentToContains(String... paths) throws InterruptedException {
     RecordedRequest request = server.takeRequest();
 

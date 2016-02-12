@@ -59,7 +59,7 @@ public class TodoApiClientTest extends MockWebServerTest {
 
     apiClient.getAllTasks();
 
-    assertRequestSentTo("/todos");
+    assertGetRequestSentTo("/todos");
   }
 
   @Test public void parsesTasksProperlyGettingAllTheTasks() throws Exception {
@@ -84,7 +84,7 @@ public class TodoApiClientTest extends MockWebServerTest {
 
     apiClient.getTaskById(ANY_TASK_ID);
 
-    assertRequestSentTo("/todos/" + ANY_TASK_ID);
+    assertGetRequestSentTo("/todos/" + ANY_TASK_ID);
   }
 
   @Test public void parsesTaskProperlyGettingTaskById() throws Exception {
@@ -115,7 +115,7 @@ public class TodoApiClientTest extends MockWebServerTest {
 
     apiClient.addTask(ANY_TASK);
 
-    assertRequestSentTo("/todos");
+    assertPostRequestSentTo("/todos");
   }
 
   @Test public void sendsTheCorrectBodyAddingANewTask() throws Exception {
@@ -146,7 +146,7 @@ public class TodoApiClientTest extends MockWebServerTest {
 
     apiClient.deleteTaskById(ANY_TASK_ID);
 
-    assertRequestSentTo("/todos/1");
+    assertDeleteRequestSentTo("/todos/1");
   }
 
   @Test(expected = ItemNotFoundException.class)
