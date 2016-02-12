@@ -89,15 +89,12 @@ public class MockWebServerTest {
     return server.getUrl("/").toString();
   }
 
-  private RecordedRequest getRecordedRequestAtIndex(int requestIndex) throws InterruptedException {
-    RecordedRequest request = null;
-    for (int i = 0; i <= requestIndex; i++) {
-      request = server.takeRequest();
-    }
-    return request;
+  protected void assertRequestBodyEquals(String jsonFile) throws InterruptedException, IOException {
+    RecordedRequest request = server.takeRequest();
+    assertEquals(getContentFromFile(jsonFile), request.getBody().readUtf8());
   }
 
-  private String getContentFromFile(String fileName) throws IOException {
+  protected String getContentFromFile(String fileName) throws IOException {
     if (fileName == null) {
       return "";
     }
@@ -110,4 +107,13 @@ public class MockWebServerTest {
     }
     return stringBuilder.toString();
   }
+
+  private RecordedRequest getRecordedRequestAtIndex(int requestIndex) throws InterruptedException {
+    RecordedRequest request = null;
+    for (int i = 0; i <= requestIndex; i++) {
+      request = server.takeRequest();
+    }
+    return request;
+  }
+
 }
