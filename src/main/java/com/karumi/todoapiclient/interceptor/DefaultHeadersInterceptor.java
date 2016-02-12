@@ -13,10 +13,21 @@
  *   limitations under the License.
  */
 
-package com.karumi.todoapiclient;
+package com.karumi.todoapiclient.interceptor;
 
-interface TodoApiClientConfig {
+import java.io.IOException;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
 
-  String BASE_ENDPOINT = "http://jsonplaceholder.typicode.com";
-  String TASKS_ENDPOINT = "/todos";
+public class DefaultHeadersInterceptor implements Interceptor {
+
+  @Override public Response intercept(Chain chain) throws IOException {
+    Request request = chain.request();
+    request = request.newBuilder()
+        .addHeader("Accept", "application/json")
+        .addHeader("Content-Type", "application/json")
+        .build();
+    return chain.proceed(request);
+  }
 }

@@ -15,18 +15,20 @@
 
 package com.karumi.todoapiclient;
 
+import com.karumi.todoapiclient.interceptor.DefaultHeadersInterceptor;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
-import static com.karumi.todoapiclient.TodoApiClientConfig.*;
+import static com.karumi.todoapiclient.TodoApiClientConfig.BASE_ENDPOINT;
 
 public class TodoApiClient {
 
   private final TodoService todoService;
 
   public TodoApiClient() {
-    Retrofit retrofit = new Retrofit.Builder()
-        .baseUrl(BASE_ENDPOINT)
-        .build();
+    OkHttpClient okHttpClient = new OkHttpClient();
+    okHttpClient.interceptors().add(new DefaultHeadersInterceptor());
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_ENDPOINT).client(okHttpClient).build();
     this.todoService = retrofit.create(TodoService.class);
   }
 }
