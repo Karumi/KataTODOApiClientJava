@@ -163,6 +163,44 @@ public class TodoApiClientTest extends MockWebServerTest {
     apiClient.deleteTaskById(ANY_TASK_ID);
   }
 
+  @Test public void sendsTheExpectedBodyUpdatingATask() throws Exception {
+    enqueueMockResponse();
+
+    apiClient.updateTaskById(ANY_TASK);
+
+    assertRequestBodyEquals("updateTaskRequest.json");
+  }
+
+  @Test public void sendsRequestToTheCorrectPathUpdatingATask() throws Exception {
+    enqueueMockResponse();
+
+    apiClient.updateTaskById(ANY_TASK);
+
+    assertRequestSentTo("/todos/1");
+  }
+
+  @Test public void parsesTheTaskProperlyUpdatingATask() throws Exception {
+    enqueueMockResponse(200, "updateTaskResponse.json");
+
+    TaskDto task = apiClient.updateTaskById(ANY_TASK);
+
+    assertTaskContainsExpectedValues(task);
+  }
+
+  @Test(expected = ItemNotFoundException.class)
+  public void returnsItemNotFoundErrorIfThereIsNoTaskToUpdateWithTheUsedId() throws Exception {
+    enqueueMockResponse(404);
+
+    apiClient.updateTaskById(ANY_TASK);
+  }
+
+  @Test(expected = UnknownErrorException.class)
+  public void returnsUnknownErrorIfThereIsAnyHandledErrorUpdatingATask() throws Exception {
+    enqueueMockResponse(418);
+
+    apiClient.updateTaskById(ANY_TASK);
+  }
+
   private void assertTaskContainsExpectedValues(TaskDto task) {
     assertEquals(task.getId(), "1");
     assertEquals(task.getUserId(), "1");
