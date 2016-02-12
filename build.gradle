@@ -22,6 +22,12 @@ dependencies {
   testCompile 'commons-io:commons-io:2.4'
 }
 
+task copyTestResources(type: Copy) {
+  from "${projectDir}/src/test/resources"
+  into "${buildDir}/classes/test"
+}
+processTestResources.dependsOn copyTestResources
+
 task checkstyle(type: Checkstyle) {
   configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
   source 'src'

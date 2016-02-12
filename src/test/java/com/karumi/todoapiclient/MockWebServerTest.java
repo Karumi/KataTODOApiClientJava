@@ -73,6 +73,11 @@ public class MockWebServerTest {
     }
   }
 
+  protected void assertRequestContainsHeader(String key, String expectedValue)
+      throws InterruptedException {
+    assertRequestContainsHeader(key, expectedValue, 0);
+  }
+
   protected void assertRequestContainsHeader(String key, String expectedValue, int requestIndex)
       throws InterruptedException {
     RecordedRequest recordedRequest = getRecordedRequestAtIndex(requestIndex);
