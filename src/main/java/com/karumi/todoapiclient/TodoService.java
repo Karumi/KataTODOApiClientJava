@@ -17,13 +17,15 @@ package com.karumi.todoapiclient;
 
 import com.karumi.todoapiclient.dto.TaskDto;
 import java.util.List;
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.http.Body;
+import retrofit.http.DELETE;
+import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.PUT;
+import retrofit.http.Path;
 
 import static com.karumi.todoapiclient.TodoApiClientConfig.TASKS_ENDPOINT;
 
@@ -38,6 +40,5 @@ interface TodoService {
   @PUT(TASKS_ENDPOINT + "/{taskId}") Call<TaskDto> updateById(@Path("taskId") String taskId,
       @Body TaskDto task);
 
-  @DELETE(TASKS_ENDPOINT + "/{taskId}") Call<List<TaskDto>> deleteById(
-      @Path("taskId") String taskId);
+  @DELETE(TASKS_ENDPOINT + "/{taskId}") Call<Void> deleteById(@Path("taskId") String taskId);
 }
