@@ -16,6 +16,7 @@
 package com.karumi.todoapiclient;
 
 import com.karumi.todoapiclient.interceptor.DefaultHeadersInterceptor;
+import java.io.IOException;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -30,5 +31,13 @@ public class TodoApiClient {
     okHttpClient.interceptors().add(new DefaultHeadersInterceptor());
     Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_ENDPOINT).client(okHttpClient).build();
     this.todoService = retrofit.create(TodoService.class);
+  }
+
+  public void getAllTasks() {
+    try {
+      todoService.getAll().execute();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
