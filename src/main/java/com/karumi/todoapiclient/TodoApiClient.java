@@ -23,9 +23,9 @@ import com.karumi.todoapiclient.exception.UnknownErrorException;
 import com.karumi.todoapiclient.interceptor.DefaultHeadersInterceptor;
 import java.io.IOException;
 import java.util.List;
-import okhttp3.OkHttpClient;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 import static com.karumi.todoapiclient.TodoApiClientConfig.BASE_ENDPOINT;
 
@@ -34,13 +34,15 @@ public class TodoApiClient {
   private final TodoService todoService;
 
   public TodoApiClient() {
-    OkHttpClient okHttpClient = new OkHttpClient();
-    okHttpClient.interceptors().add(new DefaultHeadersInterceptor());
-    Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_ENDPOINT).client(okHttpClient).build();
+    Retrofit retrofit = new Retrofit.Builder()
+        .baseUrl(BASE_ENDPOINT)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
+    retrofit.client().interceptors().add(new DefaultHeadersInterceptor());
     this.todoService = retrofit.create(TodoService.class);
   }
 
-  public List<TaskDto> getAllTasks() throws TodoApiClientException{
+  public List<TaskDto> getAllTasks() throws TodoApiClientException {
     try {
       Response<List<TaskDto>> response = todoService.getAll().execute();
       inspectResponseForErrors(response);
@@ -82,7 +84,7 @@ public class TodoApiClient {
 
   public void deleteTaskById(String taskId) throws TodoApiClientException {
     try {
-      Response response = todoService.deleteById(taskId).execute();
+      Response<Void> response = todoService.deleteById(taskId).execute();
       inspectResponseForErrors(response);
     } catch (IOException e) {
       throw new NetworkErrorException();
@@ -93,7 +95,7 @@ public class TodoApiClient {
     int code = response.code();
     if (code == 404) {
       throw new ItemNotFoundException();
-    }else {
+    } else if (code  >= 400){
       throw new UnknownErrorException(code);
     }
   }
