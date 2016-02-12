@@ -34,7 +34,11 @@ public class TodoApiClient {
   private final TodoService todoService;
 
   public TodoApiClient() {
-    Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_ENDPOINT)
+    this(BASE_ENDPOINT);
+  }
+
+  public TodoApiClient(String baseEndpoint) {
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(baseEndpoint)
         .addConverterFactory(GsonConverterFactory.create())
         .build();
     retrofit.client().interceptors().add(new DefaultHeadersInterceptor());
