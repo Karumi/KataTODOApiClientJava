@@ -61,7 +61,7 @@ There are some links which can be useful to finish these tasks:
 * [Retrofit documentation][retrofit]
 * [World-Class Testing Development Pipeline for Android - Part 3][wordl-class-testing-development-pipeline]
 
-#License
+# License
 
 Copyright 2016 Karumi
 
