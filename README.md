@@ -12,7 +12,7 @@
 
 This repository contains an API client to interact with a remote service we can use to implement a TODO application.
 
-This API Client is based on one class with name ``TodoApiClient`` containing some methos to interact with the API. Using this class we can get all the tasks we have created before, get a task using the task id, add a new task, update a task or delete an already created task.
+This API Client is based on one class with name ``TodoApiClient`` containing some methods to interact with the API. Using this class we can get all the tasks we have created before, get a task using the task id, add a new task, update a task or delete an already created task.
 
 The API client has been implemented using a networking framework named [Retrofit][retrofit]. Review the project documentation if needed.
 
