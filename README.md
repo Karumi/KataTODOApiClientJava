@@ -1,4 +1,4 @@
-![Karumi logo][karumilogo] KataTODOApiClient for Java. [![Build Status](https://travis-ci.org/Karumi/KataTODOApiClientJava.svg?branch=master)](https://travis-ci.org/Karumi/KataTODOApiClientJava)
+![Karumi logo][karumilogo] KataTODOApiClient for Java [![Build Status](https://travis-ci.org/Karumi/KataTODOApiClientJava.svg?branch=master)](https://travis-ci.org/Karumi/KataTODOApiClientJava)
 ============================
 
 - We are here to practice integration testsing using HTTP stubbing. 
@@ -56,6 +56,7 @@ If you've covered all the application functionality using integration tests you 
 
 There are some links which can be useful to finish these tasks:
 
+* [Kata TODO Api Client in Kotlin][kataTodoApiClientKotlin]
 * [MockWebServer official documentation][mockwebserver]
 * [JUnit documentation][junit]
 * [Retrofit documentation][retrofit]
@@ -83,3 +84,4 @@ limitations under the License.
 [jsonplaceholder]: http://jsonplaceholder.typicode.com/
 [wordl-class-testing-development-pipeline]: http://blog.karumi.com/world-class-testing-development-pipeline-for-android-part-3/
 [retrofit]: http://square.github.io/retrofit/
+[kataTodoApiClientKotlin]: https://github.com/Karumi/KataTODOApiClientKotlin
