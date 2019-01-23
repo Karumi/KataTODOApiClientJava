@@ -15,16 +15,17 @@
 
 package com.karumi.todoapiclient;
 
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.core.StringContains.containsString;
@@ -35,43 +36,45 @@ public class MockWebServerTest {
 
   private MockWebServer server;
 
-  @Before public void setUp() throws Exception {
+  @Before
+  public void setUp() throws Exception {
     this.server = new MockWebServer();
     this.server.start();
   }
 
-  @After public void tearDown() throws Exception {
+  @After
+  public void tearDown() throws Exception {
     server.shutdown();
   }
 
-  protected void enqueueMockResponse() throws IOException {
+  void enqueueMockResponse() {
     enqueueMockResponse(200);
   }
 
-  protected void enqueueMockResponse(int code) throws IOException {
-    enqueueMockResponse(code, null);
+  void enqueueMockResponse(int code) {
+    enqueueMockResponse(code, "{}");
   }
 
-  protected void enqueueMockResponse(int code, String fileName) throws IOException {
+  void enqueueMockResponse(int code, String body) {
     MockResponse mockResponse = new MockResponse();
-    String fileContent = getContentFromFile(fileName);
     mockResponse.setResponseCode(code);
-    mockResponse.setBody(fileContent);
+    mockResponse.setBody(body);
     server.enqueue(mockResponse);
   }
 
-  protected void assertRequestSentTo(String url) throws InterruptedException {
+
+  void assertRequestSentTo(String url) throws InterruptedException {
     RecordedRequest request = server.takeRequest();
     assertEquals(url, request.getPath());
   }
 
-  protected void assertGetRequestSentTo(String url) throws InterruptedException {
+  void assertGetRequestSentTo(String url) throws InterruptedException {
     RecordedRequest request = server.takeRequest();
     assertEquals(url, request.getPath());
     assertEquals("GET", request.getMethod());
   }
 
-  protected void assertPostRequestSentTo(String url) throws InterruptedException {
+  void assertPostRequestSentTo(String url) throws InterruptedException {
     RecordedRequest request = server.takeRequest();
     assertEquals(url, request.getPath());
     assertEquals("POST", request.getMethod());
@@ -83,7 +86,7 @@ public class MockWebServerTest {
     assertEquals("PUT", request.getMethod());
   }
 
-  protected void assertDeleteRequestSentTo(String url) throws InterruptedException {
+  void assertDeleteRequestSentTo(String url) throws InterruptedException {
     RecordedRequest request = server.takeRequest();
     assertEquals(url, request.getPath());
     assertEquals("DELETE", request.getMethod());
@@ -97,28 +100,28 @@ public class MockWebServerTest {
     }
   }
 
-  protected void assertRequestContainsHeader(String key, String expectedValue)
+  void assertRequestContainsHeader(String key, String expectedValue)
       throws InterruptedException {
     assertRequestContainsHeader(key, expectedValue, 0);
   }
 
-  protected void assertRequestContainsHeader(String key, String expectedValue, int requestIndex)
+  private void assertRequestContainsHeader(String key, String expectedValue, int requestIndex)
       throws InterruptedException {
     RecordedRequest recordedRequest = getRecordedRequestAtIndex(requestIndex);
     String value = recordedRequest.getHeader(key);
     assertEquals(expectedValue, value);
   }
 
-  protected String getBaseEndpoint() {
-    return server.getUrl("/").toString();
+  String getBaseEndpoint() {
+    return server.url("/").toString();
   }
 
-  protected void assertRequestBodyEquals(String jsonFile) throws InterruptedException, IOException {
+  void assertRequestBodyEquals(String jsonFile) throws InterruptedException, IOException {
     RecordedRequest request = server.takeRequest();
     assertEquals(getContentFromFile(jsonFile), request.getBody().readUtf8());
   }
 
-  protected String getContentFromFile(String fileName) throws IOException {
+  String getContentFromFile(String fileName) throws IOException {
     if (fileName == null) {
       return "";
     }

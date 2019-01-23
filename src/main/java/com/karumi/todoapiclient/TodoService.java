@@ -16,27 +16,33 @@
 package com.karumi.todoapiclient;
 
 import com.karumi.todoapiclient.dto.TaskDto;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+
 import java.util.List;
-import retrofit.Call;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
 
 import static com.karumi.todoapiclient.TodoApiClientConfig.TASKS_ENDPOINT;
 
 interface TodoService {
 
-  @GET(TASKS_ENDPOINT) Call<List<TaskDto>> getAll();
+  @GET(TASKS_ENDPOINT)
+  Call<List<TaskDto>> getAll();
 
-  @GET(TASKS_ENDPOINT + "/{taskId}") Call<TaskDto> getById(@Path("taskId") String taskId);
+  @GET(TASKS_ENDPOINT + "/{taskId}")
+  Call<TaskDto> getById(@Path("taskId") String taskId);
 
-  @POST(TASKS_ENDPOINT) Call<TaskDto> add(@Body TaskDto task);
+  @POST(TASKS_ENDPOINT)
+  Call<TaskDto> add(@Body TaskDto task);
 
-  @PUT(TASKS_ENDPOINT + "/{taskId}") Call<TaskDto> updateById(@Path("taskId") String taskId,
-      @Body TaskDto task);
+  @PUT(TASKS_ENDPOINT + "/{taskId}")
+  Call<TaskDto> updateById(@Path("taskId") String taskId,
+                           @Body TaskDto task);
 
-  @DELETE(TASKS_ENDPOINT + "/{taskId}") Call<Void> deleteById(@Path("taskId") String taskId);
+  @DELETE(TASKS_ENDPOINT + "/{taskId}")
+  Call<Void> deleteById(@Path("taskId") String taskId);
 }
