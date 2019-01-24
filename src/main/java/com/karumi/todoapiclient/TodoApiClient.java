@@ -21,11 +21,14 @@ import com.karumi.todoapiclient.exception.NetworkErrorException;
 import com.karumi.todoapiclient.exception.TodoApiClientException;
 import com.karumi.todoapiclient.exception.UnknownErrorException;
 import com.karumi.todoapiclient.interceptor.DefaultHeadersInterceptor;
+import okhttp3.OkHttpClient;
+import org.jetbrains.annotations.Nullable;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 import java.io.IOException;
 import java.util.List;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 import static com.karumi.todoapiclient.TodoApiClientConfig.BASE_ENDPOINT;
 
@@ -38,10 +41,11 @@ public class TodoApiClient {
   }
 
   public TodoApiClient(String baseEndpoint) {
+    OkHttpClient client = new OkHttpClient().newBuilder().addInterceptor(new DefaultHeadersInterceptor()).build();
     Retrofit retrofit = new Retrofit.Builder().baseUrl(baseEndpoint)
         .addConverterFactory(GsonConverterFactory.create())
+        .client(client)
         .build();
-    retrofit.client().interceptors().add(new DefaultHeadersInterceptor());
     this.todoService = retrofit.create(TodoService.class);
   }
 
@@ -65,7 +69,7 @@ public class TodoApiClient {
     }
   }
 
-  public TaskDto addTask(TaskDto task) throws TodoApiClientException {
+  @Nullable public TaskDto addTask(TaskDto task) throws TodoApiClientException {
     try {
       Response<TaskDto> response = todoService.add(task).execute();
       inspectResponseForErrors(response);

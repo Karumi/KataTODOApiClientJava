@@ -16,9 +16,10 @@
 package com.karumi.todoapiclient;
 
 import com.karumi.todoapiclient.dto.TaskDto;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -34,7 +35,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void sendsAcceptAndContentTypeHeaders() throws Exception {
-    enqueueMockResponse();
+    enqueueMockResponse(200, "[]");
 
     apiClient.getAllTasks();
 
@@ -42,7 +43,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void sendsGetAllTaskRequestToTheCorrectEndpoint() throws Exception {
-    enqueueMockResponse();
+    enqueueMockResponse(200, "[]");
 
     apiClient.getAllTasks();
 
@@ -50,7 +51,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void parsesTasksProperlyGettingAllTheTasks() throws Exception {
-    enqueueMockResponse(200, "getTasksResponse.json");
+    enqueueMockResponse(200, getContentFromFile("getTasksResponse.json"));
 
     List<TaskDto> tasks = apiClient.getAllTasks();
 
