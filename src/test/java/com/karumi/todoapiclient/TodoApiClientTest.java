@@ -18,9 +18,10 @@ package com.karumi.todoapiclient;
 import com.karumi.todoapiclient.dto.TaskDto;
 import com.karumi.todoapiclient.exception.ItemNotFoundException;
 import com.karumi.todoapiclient.exception.UnknownErrorException;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -39,7 +40,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void sendsAcceptAndContentTypeHeaders() throws Exception {
-    enqueueMockResponse();
+    enqueueMockResponse(200, "[]");
 
     apiClient.getAllTasks();
 
@@ -47,7 +48,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void sendsContentTypeHeader() throws Exception {
-    enqueueMockResponse();
+    enqueueMockResponse(200, "[]");
 
     apiClient.getAllTasks();
 
@@ -55,7 +56,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void sendsGetAllTaskRequestToTheCorrectEndpoint() throws Exception {
-    enqueueMockResponse();
+    enqueueMockResponse(200, "[]");
 
     apiClient.getAllTasks();
 
@@ -63,7 +64,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void parsesTasksProperlyGettingAllTheTasks() throws Exception {
-    enqueueMockResponse(200, "getTasksResponse.json");
+    enqueueMockResponse(200, getContentFromFile("getTasksResponse.json"));
 
     List<TaskDto> tasks = apiClient.getAllTasks();
 
@@ -88,7 +89,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void parsesTaskProperlyGettingTaskById() throws Exception {
-    enqueueMockResponse(200, "getTaskByIdResponse.json");
+    enqueueMockResponse(200, getContentFromFile("getTaskByIdResponse.json"));
 
     TaskDto task = apiClient.getTaskById(ANY_TASK_ID);
 
@@ -127,7 +128,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void testParsesTheTaskCreatedProperlyAddingANewTask() throws Exception {
-    enqueueMockResponse(201, "addTaskResponse.json");
+    enqueueMockResponse(201, getContentFromFile("addTaskResponse.json"));
 
     TaskDto task = apiClient.addTask(ANY_TASK);
 
@@ -180,7 +181,7 @@ public class TodoApiClientTest extends MockWebServerTest {
   }
 
   @Test public void parsesTheTaskProperlyUpdatingATask() throws Exception {
-    enqueueMockResponse(200, "updateTaskResponse.json");
+    enqueueMockResponse(200, getContentFromFile("updateTaskResponse.json"));
 
     TaskDto task = apiClient.updateTaskById(ANY_TASK);
 

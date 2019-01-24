@@ -15,9 +15,10 @@
 
 package com.karumi.todoapiclient.interceptor;
 
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import java.io.IOException;
 
 public class DefaultHeadersInterceptor implements Interceptor {
